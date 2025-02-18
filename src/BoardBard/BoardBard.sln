@@ -6,7 +6,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardBard.Web.Client", "Boa
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{53331064-28FD-4621-9B2E-74BBD2845B90}"
 	ProjectSection(SolutionItems) = preProject
-		compose.yaml = compose.yaml
+		docker-compose.yaml = docker-compose.yaml
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BoardBard.Core", "BoardBard.Core\BoardBard.Core.csproj", "{16230641-791B-46C5-9950-540BFF20746B}"

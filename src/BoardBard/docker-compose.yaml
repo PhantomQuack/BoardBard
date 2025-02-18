@@ -1,0 +1,30 @@
+﻿services:
+  
+  boardbard.web.client:
+    image: boardbard.web.client
+    container_name: boardbard-web-client
+    build:
+      context: .
+      dockerfile: BoardBard.Web/BoardBard.Web.Client/Dockerfile
+    networks:
+      boardbard-network: { }
+
+  boardbard.web:
+    image: boardbard.web
+    container_name: boardbard-web
+    ports:
+      - 5000:8080
+    build:
+      context: .
+      dockerfile: BoardBard.Web/BoardBard.Web/Dockerfile
+    networks:
+      boardbard-network: { }
+  
+  redis:
+    image: redis
+    container_name: boardbard-redis
+    networks:
+      boardbard-network: { }
+
+networks:
+  boardbard-network: { }

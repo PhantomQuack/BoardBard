@@ -5,7 +5,7 @@ EXPOSE 8080
 EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Debug
 WORKDIR /src
 COPY ["BoardBard.Web/BoardBard.Web.Client/BoardBard.Web.Client.csproj", "BoardBard.Web/BoardBard.Web.Client/"]
 RUN dotnet restore "BoardBard.Web/BoardBard.Web.Client/BoardBard.Web.Client.csproj"
@@ -14,7 +14,7 @@ WORKDIR "/src/BoardBard.Web/BoardBard.Web.Client"
 RUN dotnet build "BoardBard.Web.Client.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
+ARG BUILD_CONFIGURATION=Debug
 RUN dotnet publish "BoardBard.Web.Client.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
