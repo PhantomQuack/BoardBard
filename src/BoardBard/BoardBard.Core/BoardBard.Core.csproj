@@ -4,11 +4,7 @@
         <TargetFramework>net8.0</TargetFramework>
         <LangVersion>latestmajor</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
+        <Nullable>annotations</Nullable>
     </PropertyGroup>
-
-    <ItemGroup>
-      <Folder Include="Models\" />
-    </ItemGroup>
 
 </Project>
