@@ -1,30 +1,27 @@
 ﻿services:
   
-  boardbard.web.client:
-    image: boardbard.web.client
-    container_name: boardbard-web-client
-    build:
-      context: .
-      dockerfile: BoardBard.Web/BoardBard.Web.Client/Dockerfile
-    networks:
-      boardbard-network: { }
-
   boardbard.web:
     image: boardbard.web
     container_name: boardbard-web
+    environment:
+      BOARDBARD_DB_PROVIDER: "sqlite"
+      BOARDBARD_SQLITE_CONNECTION_STRING: "Data Source=boardbard.db;Cache=Shared"
+      BOARDBARD_SQLITE_ENABLE_DETAILED_ERRORS: false
+      BOARDBARD_SQLITE_MIGRATIONS_TABLE: "boardbard_migrations"
     ports:
-      - 5000:8080
+      - "5000:8080"
     build:
       context: .
       dockerfile: BoardBard.Web/BoardBard.Web/Dockerfile
     networks:
-      boardbard-network: { }
-  
-  redis:
-    image: redis
-    container_name: boardbard-redis
-    networks:
-      boardbard-network: { }
+      boardbard-network:
+        ipv4_address: 10.1.0.2
 
 networks:
-  boardbard-network: { }
+  
+  boardbard-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+        - subnet: fd00::/64

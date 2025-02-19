@@ -8,5 +8,5 @@ public class LabelType
 {
     [Key] public int LabelTypeId { get; set; }
     [MaxLength(50)] public string? Name { get; set; }
-    public string Color { get; set; }
+    public string ColorHex { get; set; }
 }

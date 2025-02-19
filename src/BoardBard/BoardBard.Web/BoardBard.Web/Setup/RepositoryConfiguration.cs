@@ -27,22 +27,25 @@ public static class RepositoryConfiguration
         return services;
     }
 
-    private static IServiceCollection ConfigureSqlite(this IServiceCollection services, IConfiguration configuration)
+    private static void ConfigureSqlite(this IServiceCollection services, IConfiguration configuration)
     {
-        var connectionString = configuration.GetConnectionString("BOARDBARD_SQLITE_CONNECTION_STRING");
+        var connectionString = configuration.GetValue<string>("BOARDBARD_SQLITE_CONNECTION_STRING");
         ArgumentException.ThrowIfNullOrWhiteSpace(connectionString, "Connection string is null or empty");
         services.AddDbContext<SqliteDbContext>(options =>
             options.UseSqlite(connectionString, sqliteOptions =>
             {
                 var migrationsTable = configuration.GetValue<string>("BOARDBARD_SQLITE_MIGRATIONS_TABLE");
-                var migrationsSchema = configuration.GetValue<string>("BOARDBARD_SQLITE_MIGRATIONS_SCHEMA");
-                if (!string.IsNullOrWhiteSpace(migrationsTable) && string.IsNullOrWhiteSpace(migrationsSchema))
-                    sqliteOptions.MigrationsHistoryTable(migrationsTable, migrationsSchema);
+                if (!string.IsNullOrWhiteSpace(migrationsTable))
+                    sqliteOptions.MigrationsHistoryTable(migrationsTable);
                 if (configuration.GetValue("BOARDBARD_SQLITE_ENABLE_DETAILED_ERRORS", false))
                     options.EnableDetailedErrors();
             }));
+        
+        using var serviceProvider = services.BuildServiceProvider();
+        using var dbContext = serviceProvider.GetRequiredService<SqliteDbContext>();
+        if (dbContext.Database.GetPendingMigrations().Any())
+            dbContext.Database.Migrate();
 
         services.AddScoped(typeof(IRepository<>), typeof(SqliteRepository<>));
-        return services;
     }
 }

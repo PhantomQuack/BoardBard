@@ -4,11 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace BoardBard.Core.Models.App;
 
 [Table("Tasks", Schema = "Core")]
-public abstract class TaskItem
+public class TaskItem
 {
     [Key] public int TaskId { get; set; }
-    [MaxLength(50)] public string TaskName { get; set; }
-    [MaxLength(40000)] public string TaskDescription { get; set; }
+
+    [Required, ForeignKey(nameof(TaskCard))]
+    public int TaskCardId { get; set; }
+
+    public TaskCard TaskCard { get; set; }
+    [MaxLength(50)] public string Name { get; set; }
+    [MaxLength(40000)] public string Description { get; set; }
     public int Sequence { get; set; }
     public bool IsCompleted { get; set; }
     public DateTime? StartDate { get; set; }

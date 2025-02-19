@@ -2,7 +2,10 @@ using BoardBard.Web.Components;
 using BoardBard.Web.Setup;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Configuration.AddEnvironmentVariables();
+builder.Configuration
+    .AddEnvironmentVariables()
+    .AddJsonFile("appsettings.json")
+    .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

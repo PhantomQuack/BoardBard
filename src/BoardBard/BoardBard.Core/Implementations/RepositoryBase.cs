@@ -10,7 +10,7 @@ public abstract class RepositoryBase<T>(DbContext context) : IRepository<T>
 
     public virtual async Task<T?> GetByIdAsync(int id) => await _dbSet.FindAsync(id);
 
-    public virtual async Task<IEnumerable<T>> GetAllAsync() => await _dbSet.ToListAsync();
+    public virtual IQueryable<T> QueryAll() => _dbSet.AsQueryable();
 
     public virtual async Task AddAsync(T entity)
     {
