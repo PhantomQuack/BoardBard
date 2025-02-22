@@ -5,6 +5,7 @@
         <LangVersion>latestmajor</LangVersion>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>annotations</Nullable>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,10 +13,12 @@
       <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.2" />
       <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.2" />
+      <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.3" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Migrations\Sqlite\" />
+      <Folder Include="Migrations\" />
+      <Folder Include="Repositories\" />
     </ItemGroup>
 
 </Project>

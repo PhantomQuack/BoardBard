@@ -12,7 +12,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
 
-builder.Services.ConfigureRepositories(builder.Configuration);
+builder.Services.ConfigureDbContext(builder.Configuration);
 
 
 var app = builder.Build();

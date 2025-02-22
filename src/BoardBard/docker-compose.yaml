@@ -4,10 +4,11 @@
     image: boardbard.web
     container_name: boardbard-web
     environment:
-      BOARDBARD_DB_PROVIDER: "sqlite"
-      BOARDBARD_SQLITE_CONNECTION_STRING: "Data Source=boardbard.db;Cache=Shared"
-      BOARDBARD_SQLITE_ENABLE_DETAILED_ERRORS: false
-      BOARDBARD_SQLITE_MIGRATIONS_TABLE: "boardbard_migrations"
+      BOARDBARD_DB_PROVIDER: "postgres"
+      BOARDBARD_POSTGRES_DATABASE: "boardbard"
+      BOARDBARD_POSTGRES_PASSWORD: "sample"
+      BOARDBARD_POSTGRES_PORT: 5432
+      BOARDBARD_POSTGRES_USERNAME: "boardbard"
     ports:
       - "5000:8080"
     build:
@@ -16,6 +17,21 @@
     networks:
       boardbard-network:
         ipv4_address: 10.1.0.2
+    depends_on:
+      - postgres
+  
+  postgres:
+    image: postgres:latest
+    container_name: boardbard-db
+    environment:
+      POSTGRES_DB: "boardbard"
+      POSTGRES_USER: "boardbard"
+      POSTGRES_PASSWORD: "sample"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d boardbard -h localhost -p 5432 -w -q -W 'sample'" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
 
 networks:
   
