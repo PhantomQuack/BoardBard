@@ -1,11 +1,14 @@
 using BoardBard.Web.Components;
 using BoardBard.Web.Setup;
+using Radzen;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Configuration
     .AddEnvironmentVariables()
     .AddJsonFile("appsettings.json")
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json");
+
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
@@ -13,6 +16,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.ConfigureDbContext(builder.Configuration);
+builder.Services.AddRadzenComponents();
 
 
 var app = builder.Build();

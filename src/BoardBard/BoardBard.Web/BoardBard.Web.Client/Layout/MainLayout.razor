@@ -1,9 +1,34 @@
-﻿@inherits LayoutComponentBase
+﻿@using Radzen
+@using Radzen.Blazor;
+@inherits LayoutComponentBase
+<RadzenLayout style="position: relative">
+    <RadzenHeader>
+        <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" Gap="0">
+            <RadzenSidebarToggle Click="ToggleSideBar"/>
+            <RadzenLabel Text="Header"/>
+        </RadzenStack>
+    </RadzenHeader>
+    <RadzenSidebar Responsive="false" @bind-Expanded="@SideBarExpanded" style="position: absolute">
+        <RadzenPanelMenu>
+            <RadzenPanelMenuItem Text="Home" Icon="home"/>
+            <RadzenPanelMenuItem Text="Users" Icon="account_box"/>
+        </RadzenPanelMenu>
+        <div class="rz-p-4">
+            Sidebar
+        </div>
+    </RadzenSidebar>
+    <RadzenBody>
+        @Body
+    </RadzenBody>
+    <RadzenFooter>
+        Footer
+    </RadzenFooter>
+</RadzenLayout>
 
-@Body
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+

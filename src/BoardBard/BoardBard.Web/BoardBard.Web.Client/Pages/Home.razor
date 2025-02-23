@@ -1,6 +1,11 @@
 ﻿@page "/"
+@using BoardBard.Core.Contexts
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<p>Provider: @Context.Database.ProviderName?.Split(".").Last()</p>
 
-Welcome to your new app.
+@code{
+
+    [Inject] private DataContext Context { get; set; }
+
+}

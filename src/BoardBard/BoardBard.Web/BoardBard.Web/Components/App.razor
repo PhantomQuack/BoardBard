@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="app.css"/>
     <link rel="stylesheet" href="BoardBard.Web.styles.css"/>
     <HeadOutlet @rendermode="InteractiveAuto"/>
+    <RadzenTheme Theme="material-dark" @rendermode="InteractiveAuto" />
 </head>
 
 <body>
 <Routes @rendermode="InteractiveAuto"/>
 <script src="_framework/blazor.web.js"></script>
+<script src="_content/Radzen.Blazor/Radzen.Blazor.js?v=@(typeof(Radzen.Colors).Assembly.GetName().Version)"></script>
 </body>
 
 </html>
