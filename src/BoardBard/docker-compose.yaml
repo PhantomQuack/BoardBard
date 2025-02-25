@@ -20,7 +20,8 @@
       context: .
       dockerfile: BoardBard.Web/BoardBard.Web/Dockerfile
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
   
   postgres:
     image: postgres:latest
@@ -40,7 +41,6 @@
       retries: 3
 
 networks:
-  
   boardbard-network:
     ipam:
       driver: default
