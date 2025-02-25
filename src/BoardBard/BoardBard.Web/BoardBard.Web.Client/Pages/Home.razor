@@ -1,0 +1,11 @@
+﻿@page "/"
+@using BoardBard.Core.Contexts
+<PageTitle>Home</PageTitle>
+
+<p>Provider: @Context.Database.ProviderName?.Split(".").Last()</p>
+
+@code{
+
+    [Inject] private DataContext Context { get; set; }
+
+}

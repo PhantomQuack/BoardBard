@@ -1,0 +1,49 @@
+﻿services:
+  
+  boardbard.web:
+    image: boardbard.web
+    container_name: boardbard-web
+    networks:
+      boardbard-network:
+    ports:
+      - "5000:8080"
+    environment:
+      BOARDBARD_DB_PROVIDER: "postgres"
+      BOARDBARD_POSTGRES_DATABASE: "boardbard"
+      BOARDBARD_POSTGRES_PASSWORD: "sample"
+      BOARDBARD_POSTGRES_PORT: 5432
+      BOARDBARD_POSTGRES_USERNAME: "boardbard"
+      BOARDBARD_POSTGRES_HOST: "postgres"
+      BOARDBARD_POSTGRES_MIGRATIONS_TABLE: "entity_migrations"
+      BOARDBARD_POSTGRES_SCHEMA: "mig"
+    build:
+      context: .
+      dockerfile: BoardBard.Web/BoardBard.Web/Dockerfile
+    depends_on:
+      postgres:
+        condition: service_healthy
+  
+  postgres:
+    image: postgres:latest
+    container_name: boardbard-db
+    networks:
+      boardbard-network:
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: "boardbard"
+      POSTGRES_USER: "boardbard"
+      POSTGRES_PASSWORD: "sample"
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d boardbard" ]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+networks:
+  boardbard-network:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.1.0.0/24
+        - subnet: fd00::/64
